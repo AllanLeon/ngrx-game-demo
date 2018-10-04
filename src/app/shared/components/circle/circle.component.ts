@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Circle } from 'app/core/models/objects/circle.model';
 
 @Component({
   selector: 'nge-circle',
@@ -7,9 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CircleComponent implements OnInit {
 
-  @Input() x: number;
-  @Input() y: number;
-  @Input() radius: number;
+  @Input() circle: Circle;
 
   constructor() { }
 

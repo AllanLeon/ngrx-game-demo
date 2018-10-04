@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { gameConfigReducers, gameObjectsReducer } from './store';
+import { CircleComponent } from './shared/components';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { gameConfigReducers, gameObjectsReducer } from './store';
   imports: [
     BrowserModule,
     CoreModule,
+    AppRoutingModule,
     SharedModule.forRoot(),
     StoreModule.forRoot({
       gameConfig: combineReducers(gameConfigReducers),
@@ -28,6 +31,9 @@ import { gameConfigReducers, gameObjectsReducer } from './store';
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CircleComponent,
+  ]
 })
 export class AppModule { }
