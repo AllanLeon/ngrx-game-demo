@@ -7,7 +7,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { gameConfigReducers } from './store';
+import { gameConfigReducers, gameObjectsReducer } from './store';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { gameConfigReducers } from './store';
     SharedModule.forRoot(),
     StoreModule.forRoot({
       gameConfig: combineReducers(gameConfigReducers),
+      gameObjects: gameObjectsReducer,
     }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({

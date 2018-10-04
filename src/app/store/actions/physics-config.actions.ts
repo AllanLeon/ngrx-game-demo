@@ -6,16 +6,16 @@ export enum PhysicsConfigActionTypes {
   RESET = '[PhysicsConfig] Reset',
 }
 
-export class Reset implements Action {
+export class ResetPhysics implements Action {
   readonly type = PhysicsConfigActionTypes.RESET;
 }
 
 export class UpdateGravity implements Action {
   readonly type = PhysicsConfigActionTypes.UPDATE_GRAVITY;
 
-  constructor(public payload: Vector2) {}
+  constructor(public payload: { gravity: Vector2 }) {}
 }
 
 export type PhysicsConfigActionsUnion =
-  | Reset
+  | ResetPhysics
   | UpdateGravity;

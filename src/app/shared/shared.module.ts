@@ -1,12 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CircleComponent } from './components';
 
 @NgModule({
   imports: [
     CommonModule,
   ],
-  declarations: [],
-  exports: [],
+  declarations: [
+    CircleComponent,
+  ],
+  exports: [
+    CircleComponent,
+  ],
   providers: []
 })
 export class SharedModule {

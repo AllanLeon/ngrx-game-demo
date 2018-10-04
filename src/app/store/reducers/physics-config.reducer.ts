@@ -8,10 +8,6 @@ const initialState: PhysicsConfig = {
   },
 };
 
-export interface PhysicsConfigState {
-  physicsConfig: PhysicsConfig;
-}
-
 export function physicsConfigReducer(
   state: PhysicsConfig = initialState,
   action: PhysicsConfigActionsUnion,
@@ -24,7 +20,7 @@ export function physicsConfigReducer(
     case PhysicsConfigActionTypes.UPDATE_GRAVITY: {
       return {
         ...state,
-        gravity: action.payload,
+        gravity: action.payload.gravity,
       };
     }
 

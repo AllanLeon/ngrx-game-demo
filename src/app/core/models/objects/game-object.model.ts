@@ -1,5 +1,8 @@
-export interface GameObject {
-  id: string;
-  x: number;
-  y: number;
+export abstract class GameObject {
+  constructor(
+    public x: number,
+    public y: number,
+  ) { }
+
+  abstract collide();
 }
