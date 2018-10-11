@@ -3,7 +3,7 @@ import { PhysicsConfig } from '../models';
 
 const initialState: PhysicsConfig = {
   gravity: {
-    y: 10,
+    y: 0,
     x: 0,
   },
 };
@@ -14,13 +14,15 @@ export function physicsConfigReducer(
 ): PhysicsConfig {
   switch (action.type) {
     case PhysicsConfigActionTypes.RESET: {
-      return initialState;
+      return {
+        ...initialState,
+      };
     }
 
     case PhysicsConfigActionTypes.UPDATE_GRAVITY: {
       return {
         ...state,
-        gravity: action.payload.gravity,
+        gravity: action.payload,
       };
     }
 

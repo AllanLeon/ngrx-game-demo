@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterContentInit } from '@angular/core';
-import { CircleComponent } from 'app/shared/components';
-import { Circle } from 'app/core/models/objects/circle.model';
+import { Component, OnInit, ViewChild, ViewContainerRef, AfterContentInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { GameObjectManager } from 'app/core';
+import { GameObjectsState, GameConfig, SetCanvas, GameState, UpdateGravity } from 'app/store';
+import { AddGameObject } from '../store/actions/game-objects.actions';
+import { Circle } from '../core/models/objects/circle.model';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'nge-canvas',
@@ -11,18 +16,24 @@ export class CanvasComponent implements OnInit, AfterContentInit {
   @ViewChild('canvas', { read: ViewContainerRef }) canvas: ViewContainerRef;
 
   constructor(
-    private resolver: ComponentFactoryResolver,
+    private store: Store<GameState>,
+    private gameObjectsStore: Store<GameObjectsState>,
+    private gameObjectManager: GameObjectManager,
   ) { }
 
   ngOnInit() { }
 
   ngAfterContentInit() {
-    const circleFactory = this.resolver.resolveComponentFactory(CircleComponent);
-    const circle = this.canvas.createComponent(circleFactory);
-    circle.instance.circle = new Circle(10, 10, 20);
-
-    const circle2 = this.canvas.createComponent(circleFactory);
-    circle2.instance.circle = new Circle(100, 10, 50);
+    this.gameObjectManager.setCanvas(this.canvas);
+    // this.gameObjectManager.createCircle(10, 10, 20);
+    // this.gameObjectManager.createCircle(100, 10, 50);
+    // this.gameConfigStore.dispatch(new SetCanvas({canvas: this.canvas}));
+    this.store.dispatch(new AddGameObject({gameObject: new Circle(10, 10, 20)}));
+    this.store.dispatch(new AddGameObject({gameObject: new Circle(100, 50, 40)}));
+    this.store.dispatch(new UpdateGravity({ x: 0, y: 5 }));
+    timer(5000).subscribe(() => {
+      this.store.dispatch(new UpdateGravity({ x: 10, y: 1 }));
+    });
   }
 
 }

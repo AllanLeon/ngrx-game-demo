@@ -29,6 +29,16 @@ export function gameObjectsReducer(
       return newState;
     }
 
+    case GameObjectsActionTypes.UPDATE_OBJECT: {
+      const newState = adapter.updateOne(action.payload, state);
+      return newState;
+    }
+
+    case GameObjectsActionTypes.UPDATE_MANY_OBJECTS: {
+      const newState = adapter.updateMany(action.payload, state);
+      return newState;
+    }
+
     default: {
       return state;
     }

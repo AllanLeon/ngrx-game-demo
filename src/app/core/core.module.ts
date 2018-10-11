@@ -1,6 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameObjectManager } from './services';
+import { CircleComponent } from '../shared/components';
 
 @NgModule({
   imports: [
@@ -9,7 +10,10 @@ import { GameObjectManager } from './services';
   declarations: [],
   providers: [
     GameObjectManager,
-  ]
+  ],
+  entryComponents: [
+    CircleComponent,
+  ],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

@@ -13,7 +13,7 @@ export class ResetPhysics implements Action {
 export class UpdateGravity implements Action {
   readonly type = PhysicsConfigActionTypes.UPDATE_GRAVITY;
 
-  constructor(public payload: { gravity: Vector2 }) {}
+  constructor(public payload: Vector2) {}
 }
 
 export type PhysicsConfigActionsUnion =

@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { StoreModule, combineReducers } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { storeFreeze } from 'ngrx-store-freeze';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { gameConfigReducers, gameObjectsReducer } from './store';
-import { CircleComponent } from './shared/components';
+import { gameConfigReducers, gameObjectsReducer, GameObjectsEffects, GravityEffects } from './store';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -23,8 +23,13 @@ import { AppRoutingModule } from './app-routing.module';
     StoreModule.forRoot({
       gameConfig: combineReducers(gameConfigReducers),
       gameObjects: gameObjectsReducer,
+    }, {
+      metaReducers: [storeFreeze],
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([
+      GameObjectsEffects,
+      GravityEffects,
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 50,
       logOnly: true,
@@ -32,8 +37,5 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [
-    CircleComponent,
-  ]
 })
 export class AppModule { }

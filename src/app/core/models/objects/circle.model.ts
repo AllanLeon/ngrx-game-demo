@@ -1,4 +1,4 @@
-import { GameObject } from './game-object.model';
+import { GameObject, GameObjectType } from './game-object.model';
 
 export class Circle extends GameObject {
   constructor(
@@ -7,6 +7,7 @@ export class Circle extends GameObject {
     public radius: number,
   ) {
     super(x, y);
+    this.type = GameObjectType.Circle;
   }
 
   collide() {
