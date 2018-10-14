@@ -11,8 +11,9 @@ import { CircleComponent } from 'app/shared/components';
 import { GameObject } from '../models';
 import { Store } from '@ngrx/store';
 import { selectAllGameObjects } from '../../store/selectors';
-import { GameObjectEntity,  GameState } from '../../store/models';
-import { combineLatest } from 'rxjs';
+import { GameState } from '../../store/models';
+import { timer } from 'rxjs';
+import { SetGameObjectSpeed } from '../../store/actions/game-objects.actions';
 
 @Injectable()
 export class GameObjectManager {
@@ -20,7 +21,7 @@ export class GameObjectManager {
   private circleFactory: ComponentFactory<CircleComponent>;
   private canvas: ViewContainerRef;
   private gameObjectRefs: ComponentRef<CircleComponent>[] = [];
-  private gameObjectsEntities: GameObjectEntity[];
+  private gameObjects: GameObject[];
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -29,7 +30,14 @@ export class GameObjectManager {
     this.circleFactory = this.resolver.resolveComponentFactory(CircleComponent);
     this.store.select(selectAllGameObjects)
     .subscribe((gameObjects) => {
-      this.gameObjectsEntities = gameObjects;
+      this.gameObjects = gameObjects;
+    });
+
+    timer(2000).subscribe(() => {
+      this.store.dispatch(new SetGameObjectSpeed({
+        gameObject: this.gameObjects[0],
+        speed: { x: 10, y: 0 },
+      }));
     });
   }
 
@@ -65,8 +73,8 @@ export class GameObjectManager {
 
   redrawAll() {
     this.clearAll();
-    this.gameObjectsEntities.forEach((gameObjectEntity) => {
-      this.createObject(gameObjectEntity.gameObject);
+    this.gameObjects.forEach((gameObject) => {
+      this.createObject(gameObject);
     });
   }
 }

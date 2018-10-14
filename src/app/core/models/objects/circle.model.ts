@@ -2,8 +2,8 @@ import { GameObject, GameObjectType } from './game-object.model';
 
 export class Circle extends GameObject {
   constructor(
-    public x: number,
-    public y: number,
+    x: number,
+    y: number,
     public radius: number,
   ) {
     super(x, y);

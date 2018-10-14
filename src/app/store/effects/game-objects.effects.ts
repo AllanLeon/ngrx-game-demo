@@ -4,7 +4,7 @@ import { tap, map } from 'rxjs/operators';
 
 import { GameObjectManager } from 'app/core/services';
 import {
-  AddGameObject, GameObjectsActionTypes, RedrawAllGameObjects, UpdateGameObject, UpdateManyGameObjects,
+  AddGameObject, GameObjectsActionTypes, RedrawAllGameObjects, UpdateGameObject, UpdateManyGameObjects, SetGameObjectSpeed,
 } from '../actions/game-objects.actions';
 
 @Injectable()
@@ -34,6 +34,18 @@ export class GameObjectsEffects {
     .pipe(
       ofType<UpdateManyGameObjects>(GameObjectsActionTypes.UPDATE_MANY_OBJECTS),
       map(() => new RedrawAllGameObjects()),
+    );
+
+  @Effect()
+  setGameObjectSpeed$ = this.actions$
+    .pipe(
+      ofType<SetGameObjectSpeed>(GameObjectsActionTypes.SET_OBJECT_SPEED),
+      map((action) => new UpdateGameObject({
+        id: action.payload.gameObject.id,
+        changes: {
+          speed: action.payload.speed,
+        },
+      }))
     );
 
   @Effect({ dispatch: false })

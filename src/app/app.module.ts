@@ -8,7 +8,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { gameConfigReducers, gameObjectsReducer, GameObjectsEffects, GravityEffects } from './store';
+import { gameConfigReducers, gameObjectsReducer, GameObjectsEffects, GravityEffects, BodyEffects } from './store';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -29,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
     EffectsModule.forRoot([
       GameObjectsEffects,
       GravityEffects,
+      BodyEffects,
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 50,

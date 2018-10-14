@@ -3,13 +3,14 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, withLatestFrom } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
-import { GameState, GameObjectEntity } from '../../models';
+import { GameState } from '../../models';
 import { ApplyGravityToGameObjects, GravityActionTypes } from '../../actions';
 import { timer, Subject } from 'rxjs';
 import { Vector2 } from 'app/core/models/common';
 import { selectGravityConfig, selectAllGameObjects } from '../../selectors';
 import { UpdateManyGameObjects } from '../../actions/game-objects.actions';
 import { UpdateStr } from '@ngrx/entity/src/models';
+import { GameObject } from '../../../core';
 
 @Injectable()
 export class GravityEffects implements OnDestroy {
@@ -22,7 +23,6 @@ export class GravityEffects implements OnDestroy {
     private store: Store<GameState>,
   ) {
     timer(0, 100).subscribe((x) => {
-      console.log(x);
       if (this.gravity && (this.gravity.x !== 0 || this.gravity.y !== 0)) {
         this.store.dispatch(new ApplyGravityToGameObjects());
       }
@@ -39,16 +39,22 @@ export class GravityEffects implements OnDestroy {
     .pipe(
       ofType<ApplyGravityToGameObjects>(GravityActionTypes.APPLY_TO_GAME_OBJECTS),
       withLatestFrom(this.store.select(selectAllGameObjects)),
-      map(([_, gameObjectEntities]) => {
-        const changes: UpdateStr<GameObjectEntity>[] = gameObjectEntities.map((gameObjectEntity) => ({
-          id: gameObjectEntity.id,
+      map(([_, gameObjects]) => {
+        const changes: UpdateStr<GameObject>[] = gameObjects.map((gameObject) => ({
+          id: gameObject.id,
           changes: {
-            gameObject: {
-              ...gameObjectEntity.gameObject,
-              x: gameObjectEntity.gameObject.x + this.gravity.x,
-              y: gameObjectEntity.gameObject.y + this.gravity.y,
-            }
-          }
+            position: {
+              x: gameObject.position.x + this.gravity.x,
+              y: gameObject.position.y + this.gravity.y,
+            },
+            // gameObject: {
+            //   ...gameObjectEntity.gameObject,
+            //   position: {
+            //     x: gameObjectEntity.gameObject.position.x + this.gravity.x,
+            //     y: gameObjectEntity.gameObject.position.y + this.gravity.y,
+            //   },
+            // },
+          },
         }));
         return new UpdateManyGameObjects(changes);
       }),

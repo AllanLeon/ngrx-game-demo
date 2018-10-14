@@ -19,7 +19,7 @@ export function physicsConfigReducer(
       };
     }
 
-    case PhysicsConfigActionTypes.UPDATE_GRAVITY: {
+    case PhysicsConfigActionTypes.SET_GRAVITY: {
       return {
         ...state,
         gravity: action.payload,

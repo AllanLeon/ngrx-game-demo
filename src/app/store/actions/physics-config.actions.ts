@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { Vector2 } from 'app/core/models/common';
 
 export enum PhysicsConfigActionTypes {
-  UPDATE_GRAVITY = '[PhysicsConfig] Update Gravity',
+  SET_GRAVITY = '[PhysicsConfig] Set Gravity',
   RESET = '[PhysicsConfig] Reset',
 }
 
@@ -11,7 +11,7 @@ export class ResetPhysics implements Action {
 }
 
 export class UpdateGravity implements Action {
-  readonly type = PhysicsConfigActionTypes.UPDATE_GRAVITY;
+  readonly type = PhysicsConfigActionTypes.SET_GRAVITY;
 
   constructor(public payload: Vector2) {}
 }
