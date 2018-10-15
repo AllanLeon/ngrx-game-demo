@@ -1,5 +1,6 @@
-.nge-circle {
+.nge-circle--debug {
   border-radius: 50%;
-  position: fixed;
-  background-color: #ff0000;
+  background-color: rgba($color: #00cc00, $alpha: 0.4);
+  position: absolute;
+  z-index: 10;
 }

@@ -1,7 +1,18 @@
 <div
-  class="nge-circle"
-  [style.height]="toPixels(diameter)"
-  [style.width]="toPixels(diameter)"
+  class="nge-game-object"
   [style.top]="toPixels(position.y)"
   [style.left]="toPixels(position.x)"
->&nbsp;</div>
+>
+  <img
+    *ngIf="!!circle.sprite"
+    [src]="circle.sprite"
+    class="nge-game-object__sprite"
+    [style.height]="toPixels(circle.height || diameter)"
+    [style.width]="toPixels(circle.width || diameter)"
+  />
+  <div
+    class="nge-circle--debug"
+    [style.height]="toPixels(diameter)"
+    [style.width]="toPixels(diameter)"
+  >&nbsp;</div>
+</div>

@@ -12,9 +12,13 @@ export abstract class GameObject {
   public speed: Vector2;
   public collided?: boolean;
 
+  public width?: number;
+  public height?: number;
+
   public previousState: GameObject;
 
   constructor(
+    public sprite: string,
     x: number,
     y: number,
   ) {

@@ -12,7 +12,6 @@ export class CollisionHandler {
   checkCollision(a: GameObject, b: GameObject): boolean {
     if (a.type === GameObjectType.Circle && b.type === GameObjectType.Circle) {
       const collided = this.checkCollisionBetweenCircles(a as Circle, b as Circle);
-      console.log(collided);
       return collided;
     }
     return false;
