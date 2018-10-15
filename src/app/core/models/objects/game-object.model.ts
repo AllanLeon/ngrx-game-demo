@@ -15,6 +15,8 @@ export abstract class GameObject {
   public width?: number;
   public height?: number;
 
+  public isKinematic = false;
+
   public previousState: GameObject;
 
   constructor(

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { GameState } from '../../models';
 import { ApplySpeedToGameObjects, BodyActionTypes, CheckCollisionBetweenGameObjects } from '../../actions';
 import { timer, Subject } from 'rxjs';
-import { selectAllGameObjects } from '../../selectors';
+import { selectAllGameObjects, selectGameObjectsEntities } from '../../selectors';
 import { CollisionHandler } from 'app/core/services';
 import { UpdateStr } from '@ngrx/entity/src/models';
 import { GameObject } from '../../../core';
@@ -57,19 +57,24 @@ export class BodyEffects implements OnDestroy {
     checkCollisionBetweenGameObjects$ = this.actions$
       .pipe(
         ofType<CheckCollisionBetweenGameObjects>(BodyActionTypes.CHECK_COLLISION_BETWEEN_GAME_OBJECTS),
-        withLatestFrom(this.store.select(selectAllGameObjects)),
-        map(([_, gameObjects]) => {
-          const objectsToRevert: GameObject[] = [];
+        withLatestFrom(
+          this.store.select(selectAllGameObjects),
+          this.store.select(selectGameObjectsEntities)),
+        map(([_, gameObjects, entities]) => {
+          const objectsToRevert: {
+            [key: string]: boolean;
+          } = {};
           gameObjects.forEach((object1, index) => {
             for (let i = index + 1; i < gameObjects.length; i++) {
               const object2 = gameObjects[i];
               if (this.collisionHandler.checkCollision(object1, object2)) {
-                objectsToRevert.push(object1);
+                objectsToRevert[object1.id] = true;
+                objectsToRevert[object2.id] = true;
                 break;
               }
             }
           });
-          return new RevertManyGameObjects(objectsToRevert);
+          return new RevertManyGameObjects(Object.keys(objectsToRevert).map((key) => entities[key]));
         }),
       );
 

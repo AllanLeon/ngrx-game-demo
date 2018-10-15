@@ -22,7 +22,7 @@ export class GravityEffects implements OnDestroy {
     private actions$: Actions,
     private store: Store<GameState>,
   ) {
-    timer(0, 100).subscribe((x) => {
+    timer(0, 100).subscribe(() => {
       if (this.gravity && (this.gravity.x !== 0 || this.gravity.y !== 0)) {
         this.store.dispatch(new ApplyGravityToGameObjects());
       }
@@ -40,22 +40,17 @@ export class GravityEffects implements OnDestroy {
       ofType<ApplyGravityToGameObjects>(GravityActionTypes.APPLY_TO_GAME_OBJECTS),
       withLatestFrom(this.store.select(selectAllGameObjects)),
       map(([_, gameObjects]) => {
-        const changes: UpdateStr<GameObject>[] = gameObjects.map((gameObject) => ({
-          id: gameObject.id,
-          changes: {
-            position: {
-              x: gameObject.position.x + this.gravity.x,
-              y: gameObject.position.y + this.gravity.y,
+        const changes: UpdateStr<GameObject>[] = gameObjects
+          .filter((gameObject) => gameObject.isKinematic)
+          .map((gameObject) => ({
+            id: gameObject.id,
+            changes: {
+              position: {
+                x: gameObject.position.x + this.gravity.x,
+                y: gameObject.position.y + this.gravity.y,
+              },
             },
-            // gameObject: {
-            //   ...gameObjectEntity.gameObject,
-            //   position: {
-            //     x: gameObjectEntity.gameObject.position.x + this.gravity.x,
-            //     y: gameObjectEntity.gameObject.position.y + this.gravity.y,
-            //   },
-            // },
-          },
-        }));
+          }));
         return new UpdateManyGameObjects(changes);
       }),
     );
