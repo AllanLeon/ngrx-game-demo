@@ -30,13 +30,13 @@ export function gameObjectsReducer(
       return newState;
     }
 
-    case GameObjectsActionTypes.UPDATE_OBJECT: {
+    case GameObjectsActionTypes.UPDATE_OBJECT_SUCCESS: {
       const newState = adapter.updateOne(action.payload, state);
       return newState;
     }
 
-    case GameObjectsActionTypes.UPDATE_MANY_OBJECTS: {
-      const newState = adapter.updateMany(action.payload, state);
+    case GameObjectsActionTypes.UPDATE_MANY_OBJECTS_SUCCESS: {
+      const newState = adapter.updateMany(action.payload.updates, state);
       return newState;
     }
 

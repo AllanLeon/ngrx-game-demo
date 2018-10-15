@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameObjectManager } from './services';
+import { GameObjectManager, CollisionHandler } from './services';
 import { CircleComponent } from '../shared/components';
 
 @NgModule({
@@ -10,6 +10,7 @@ import { CircleComponent } from '../shared/components';
   declarations: [],
   providers: [
     GameObjectManager,
+    CollisionHandler,
   ],
   entryComponents: [
     CircleComponent,

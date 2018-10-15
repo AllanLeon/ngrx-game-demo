@@ -6,9 +6,8 @@ import {
   ComponentRef,
 } from '@angular/core';
 
-import { Circle } from '../models/objects/circle.model';
 import { CircleComponent } from 'app/shared/components';
-import { GameObject } from '../models';
+import { GameObject, Circle } from '../models';
 import { Store } from '@ngrx/store';
 import { selectAllGameObjects } from '../../store/selectors';
 import { GameState } from '../../store/models';
@@ -33,12 +32,12 @@ export class GameObjectManager {
       this.gameObjects = gameObjects;
     });
 
-    timer(2000).subscribe(() => {
-      this.store.dispatch(new SetGameObjectSpeed({
-        gameObject: this.gameObjects[0],
-        speed: { x: 10, y: 0 },
-      }));
-    });
+    // timer(2000).subscribe(() => {
+    //   this.store.dispatch(new SetGameObjectSpeed({
+    //     gameObject: this.gameObjects[0],
+    //     speed: { x: 10, y: 0 },
+    //   }));
+    // });
   }
 
   setCanvas(canvas: ViewContainerRef) {

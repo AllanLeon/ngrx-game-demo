@@ -10,6 +10,9 @@ export abstract class GameObject {
 
   public position: Vector2;
   public speed: Vector2;
+  public collided?: boolean;
+
+  public previousState: GameObject;
 
   constructor(
     x: number,

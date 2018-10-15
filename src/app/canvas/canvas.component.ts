@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { GameObjectManager } from 'app/core';
 import { GameState, UpdateGravity } from 'app/store';
 import { AddGameObject } from '../store/actions/game-objects.actions';
-import { Circle } from '../core/models/objects/circle.model';
+import { Circle } from '../core/models/';
 import { timer } from 'rxjs';
 
 @Component({
@@ -24,12 +24,14 @@ export class CanvasComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit() {
     this.gameObjectManager.setCanvas(this.canvas);
-    this.store.dispatch(new AddGameObject(new Circle(10, 10, 20)));
-    this.store.dispatch(new AddGameObject(new Circle(100, 50, 40)));
-    this.store.dispatch(new UpdateGravity({ x: 0, y: 5 }));
-    timer(5000).subscribe(() => {
-      this.store.dispatch(new UpdateGravity({ x: 10, y: 1 }));
-    });
+    const circle1 = new Circle(0, 0, 10);
+    circle1.speed = { x: 5, y: 3 };
+    this.store.dispatch(new AddGameObject(circle1));
+    this.store.dispatch(new AddGameObject(new Circle(200, 100, 40)));
+    // this.store.dispatch(new UpdateGravity({ x: 0, y: 5 }));
+    // timer(5000).subscribe(() => {
+    //   this.store.dispatch(new UpdateGravity({ x: 10, y: 1 }));
+    // });
   }
 
 }
